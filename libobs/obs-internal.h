@@ -1574,6 +1574,10 @@ uint32_t obs_source_base_width(const obs_source_t *source);
 uint32_t obs_source_base_height(const obs_source_t *source);
 
 extern struct obs_source_info *get_source_info(const char *id);
+/* Private registry view for the Rust get_source_info (obs-source-info-lookup-fields.c.h). */
+extern size_t obs_source_info_lookup_count(void);
+extern struct obs_source_info *obs_source_info_lookup_entry(size_t index);
+extern const char *obs_source_info_lookup_id(const struct obs_source_info *info);
 extern struct obs_source_info *get_source_info2(const char *unversioned_id, uint32_t ver);
 extern bool obs_source_init_context(struct obs_source *source, obs_data_t *settings, const char *name, const char *uuid,
 				    obs_data_t *hotkey_data, bool private);

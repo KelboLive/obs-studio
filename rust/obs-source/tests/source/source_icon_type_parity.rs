@@ -1,5 +1,7 @@
 //! Tier 3: the public shim versus the original C over every enum and missing IDs.
-//! NULL IDs are excluded: get_source_info calls strcmp without a NULL guarantee.
+//! Both sides look IDs up with the ported get_source_info over the oracle's
+//! registry (installed per test thread); the lookup's own parity, NULL IDs
+//! included, is in `info_lookup_parity`.
 use core::ffi::{c_char, c_uint};
 use core::mem::{align_of, size_of};
 use obs_source::ffi::source_icon_type::obs_source_get_icon_type;
@@ -9,9 +11,12 @@ use std::ffi::CString;
 unsafe extern "C" {
     fn oracle_obs_source_get_icon_type(id: *const c_char) -> c_uint;
     fn oracle_source_icon_type_layout(size: *mut usize, alignment: *mut usize) -> bool;
+    fn oracle_source_icon_type_install();
 }
 
 fn check(id: &str, expected: u32) {
+    // SAFETY: installs the static icon registry for this thread only.
+    unsafe { oracle_source_icon_type_install() };
     let id = CString::new(id).unwrap();
     // SAFETY: both functions borrow a live terminated string and immutable
     // registry entries; the fixture never changes the registry.

@@ -2890,6 +2890,11 @@ area.
   is not a transition no longer changes that source; the call is ignored,
   as the other transition setters do. *All*, 2026-11-04. Issue
   [#3605](https://github.com/obs-rust/obs-studio/issues/3605).
+- A plugin or script that asks about a source type with no ID (NULL), for
+  its name, flags, defaults, properties or icon, or that creates a source
+  with no ID, no longer crashes OBS; the type is not found, as with an
+  unknown ID. *All*, 2026-11-10. Issue
+  [#4606](https://github.com/obs-rust/obs-studio/issues/4606).
 
 ### Security hardening
 
