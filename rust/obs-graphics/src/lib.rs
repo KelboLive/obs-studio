@@ -60,6 +60,7 @@ pub mod image_pq_scrgb;
 pub mod image_rgba64;
 pub mod image_route;
 pub mod immediate;
+pub mod immediate_arguments;
 pub mod immediate_scalars;
 pub mod linear_srgb;
 pub mod lzw;
